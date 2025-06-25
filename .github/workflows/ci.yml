@@ -14,16 +14,38 @@ jobs:
           java-version: '17'
       - name: Build examples
         run: |
+          set -e
+          wait_for_port() {
+            local port="$1"
+            for i in {1..30}; do
+              if nc -z localhost "$port"; then
+                return 0
+              fi
+              sleep 3
+            done
+            return 1
+          }
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
             dir=$(dirname "$pom")
+            project=$(echo "$dir" | tr '/:' '_')
+            db=$(basename "$dir")
             if [ -f "$dir/docker-compose.yml" ]; then
-              docker compose -f "$dir/docker-compose.yml" up -d
-              # wait for the database to accept connections
-              sleep 40
+              docker compose -p "$project" -f "$dir/docker-compose.yml" up -d
+              case "$db" in
+                postgres) port=5432 ;;
+                mysql|mariadb) port=3306 ;;
+                oracle) port=1521 ;;
+                db2) port=50000 ;;
+                sqlserver) port=1433 ;;
+                *) port=0 ;;
+              esac
+              if [ "$port" -ne 0 ]; then
+                wait_for_port "$port"
+              fi
             fi
             mvn -B -f "$pom" test
             if [ -f "$dir/docker-compose.yml" ]; then
-              docker compose -f "$dir/docker-compose.yml" down
+              docker compose -p "$project" -f "$dir/docker-compose.yml" down -v
             fi
           done
 

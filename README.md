@@ -67,10 +67,13 @@ mvn -f 1.0.0/spring-boot/h2/pom.xml test
 ```
 
 For modules that use databases other than H2 a `docker-compose.yml` is included
-next to the `pom.xml`. Start the database container before executing the tests:
+next to the `pom.xml`. Start the matching database container and wait until it
+accepts connections before executing the tests:
 
 ```bash
 docker compose up -d
+# wait for the service to be reachable (for example on port 5432)
+nc -z localhost 5432
 mvn -f 1.0.0/spring-boot/postgres/pom.xml test
 docker compose down
 ```
