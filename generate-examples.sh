@@ -9,7 +9,7 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 # Runtimes and databases for which templates may exist
-EXAMPLES=(spring-boot quarkus tomcat wildfly weblogic websphere cdi serverless docker)
+EXAMPLES=(spring-boot quarkus tomcat wildfly weblogic websphere)
 DBS=(h2 postgres mysql mariadb oracle db2 sqlserver)
 
 COMMON_TEMPLATE="template/common"
