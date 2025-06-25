@@ -18,6 +18,8 @@ jobs:
             dir=$(dirname "$pom")
             if [ -f "$dir/docker-compose.yml" ]; then
               docker compose -f "$dir/docker-compose.yml" up -d
+              # wait for the database to accept connections
+              sleep 40
             fi
             mvn -B -f "$pom" test
             if [ -f "$dir/docker-compose.yml" ]; then
