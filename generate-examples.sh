@@ -28,12 +28,13 @@ for EX in "${EXAMPLES[@]}"; do
         cp -r "template/$EX/common/." "$TARGET/"
       fi
       cp -r "$TEMPLATE/." "$TARGET/"
-      # update the example's version numbers without requiring Maven
+      # update the example's Maven coordinates to the new version if a pom exists
       if [[ -f "$TARGET/pom.xml" ]]; then
-        sed -i \
-          -e "s|<version>1.0.0</version>|<version>${VERSION}</version>|" \
-          -e "s|<version>1.0.0-beta-4</version>|<version>${VERSION}</version>|g" \
-          "$TARGET/pom.xml"
+        if command -v mvn >/dev/null 2>&1; then
+          (cd "$TARGET" && mvn -q versions:set -DnewVersion="$VERSION")
+        else
+          echo "mvn not available; skipping version update for $TARGET" >&2
+        fi
       fi
     else
       echo "Skipping missing template $TEMPLATE" >&2
