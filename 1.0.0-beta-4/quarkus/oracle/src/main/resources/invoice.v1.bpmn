@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1">
+  <process id="invoice" isExecutable="true">
+    <startEvent id="start" />
+    <endEvent id="end" />
+  </process>
+</definitions>
