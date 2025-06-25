@@ -8,6 +8,7 @@ if [[ -z "$VERSION" ]]; then
   exit 1
 fi
 
+# Runtimes and databases for which templates may exist
 EXAMPLES=(spring-boot quarkus tomcat wildfly weblogic websphere cdi serverless docker)
 DBS=(h2 postgres mysql mariadb oracle db2 sqlserver)
 
@@ -18,7 +19,10 @@ for EX in "${EXAMPLES[@]}"; do
     if [[ -d "$TEMPLATE" ]]; then
       mkdir -p "$TARGET"
       cp -r "$TEMPLATE/." "$TARGET/"
+      # update the example's Maven coordinates to the new version
       (cd "$TARGET" && mvn versions:set -DnewVersion="$VERSION")
+    else
+      echo "Skipping missing template $TEMPLATE" >&2
     fi
   done
 done

@@ -28,13 +28,20 @@ VERSION/
   ...
 ```
 
-Only a Spring Boot + H2 template is provided initially. Additional templates can
-be added under `template/` following the same structure.
+Templates live under the `template/` directory.  A sub folder exists for each
+runtime (for example `spring-boot` or `tomcat`) and inside that for every
+supported database.  Each template contains a `pom.xml` tuned for the runtime –
+Spring Boot starters for Spring Boot examples or the servlet API for Tomcat –
+along with the appropriate database driver dependency.  When new runtimes or
+databases should be demonstrated simply add the corresponding template
+directory.
 
 ## Generating a New Version
 
 Use the script `generate-examples.sh` to create a directory for a new Operaton
-version. The script copies all templates and updates the Maven versions.
+version. The script iterates over all runtime/database combinations and copies
+any matching template directory, updating the `pom.xml` to the requested
+version.
 
 ```bash
 ./generate-examples.sh 1.1.0
