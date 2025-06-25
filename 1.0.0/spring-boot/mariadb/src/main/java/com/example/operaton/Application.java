@@ -1,11 +1,6 @@
 package com.example.operaton;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
+/** Marker application class used by tests to load resources. */
 public class Application {
-  public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
-  }
+  // entry point can be added if required
 }
