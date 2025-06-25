@@ -27,7 +27,7 @@ jobs:
           }
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
             dir=$(dirname "$pom")
-            project=$(echo "$dir" | tr '/:' '_')
+            project=$(echo "$dir" | sed 's#^\./##' | tr '/:.' '_')
             db=$(basename "$dir")
             if [ -f "$dir/docker-compose.yml" ]; then
               docker compose -p "$project" -f "$dir/docker-compose.yml" up -d
