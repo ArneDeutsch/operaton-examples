@@ -25,16 +25,19 @@ VERSION/
     ...
   quarkus/
   tomcat/
+  wildfly/
+  weblogic/
+  websphere/
   ...
 ```
 
-Templates live under the `template/` directory.  A sub folder exists for each
+Templates live under the `template/` directory. A sub folder exists for each
 runtime (for example `spring-boot` or `tomcat`) and inside that for every
-supported database.  Each template contains a `pom.xml` tuned for the runtime –
-Spring Boot starters for Spring Boot examples or the servlet API for Tomcat –
-along with the appropriate database driver dependency.  When new runtimes or
+supported database. The actual source and test code is shared in
+`template/common` and is copied to every generated example. Each runtime folder
+only needs to provide its specific `pom.xml` files. When new runtimes or
 databases should be demonstrated simply add the corresponding template
-directory.
+directory with a `pom.xml` and re-use the common sources.
 
 ## Generating a New Version
 

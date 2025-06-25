@@ -12,15 +12,30 @@ fi
 EXAMPLES=(spring-boot quarkus tomcat wildfly weblogic websphere cdi serverless docker)
 DBS=(h2 postgres mysql mariadb oracle db2 sqlserver)
 
+COMMON_TEMPLATE="template/common"
+
 for EX in "${EXAMPLES[@]}"; do
   for DB in "${DBS[@]}"; do
     TEMPLATE="template/$EX/$DB"
     TARGET="${VERSION}/${EX}/${DB}"
     if [[ -d "$TEMPLATE" ]]; then
       mkdir -p "$TARGET"
+      # copy common sources first, then runtime specific and finally the pom
+      if [[ -d "$COMMON_TEMPLATE" ]]; then
+        cp -r "$COMMON_TEMPLATE/." "$TARGET/"
+      fi
+      if [[ -d "template/$EX/common" ]]; then
+        cp -r "template/$EX/common/." "$TARGET/"
+      fi
       cp -r "$TEMPLATE/." "$TARGET/"
-      # update the example's Maven coordinates to the new version
-      (cd "$TARGET" && mvn versions:set -DnewVersion="$VERSION")
+      # update the example's Maven coordinates to the new version if a pom exists
+      if [[ -f "$TARGET/pom.xml" ]]; then
+        if command -v mvn >/dev/null 2>&1; then
+          (cd "$TARGET" && mvn -q versions:set -DnewVersion="$VERSION")
+        else
+          echo "mvn not available; skipping version update for $TARGET" >&2
+        fi
+      fi
     else
       echo "Skipping missing template $TEMPLATE" >&2
     fi
