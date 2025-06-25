@@ -35,14 +35,14 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <version>1.0.0-beta-4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>2.2.224</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

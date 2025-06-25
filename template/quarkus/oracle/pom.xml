@@ -35,14 +35,14 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <version>1.0.0-beta-4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.oracle.database.jdbc</groupId>
       <artifactId>ojdbc8</artifactId>
-      <version>21.9.0.0</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>

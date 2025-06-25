@@ -35,14 +35,14 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <version>1.0.0-beta-4</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.33</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
