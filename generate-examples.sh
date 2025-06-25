@@ -30,6 +30,10 @@ for EX in "${EXAMPLES[@]}"; do
       if [[ -d "$COMMON_SRC" ]]; then
         cp -r "$COMMON_SRC/." "$TARGET/"
       fi
+      # mix in database specific overrides
+      if [[ -d "$COMMON_SRC/$DB" ]]; then
+        cp -r "$COMMON_SRC/$DB/." "$TARGET/"
+      fi
       if [[ -d "template/$EX/common" ]]; then
         cp -r "template/$EX/common/." "$TARGET/"
       fi

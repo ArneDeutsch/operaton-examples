@@ -36,12 +36,13 @@ runtime (for example `spring-boot` or `tomcat`) and inside that for every
 supported database. The actual source and test code is shared in
 `template/common` and is copied to every generated example. Spring Boot modules
 instead use `template/common-spring` so their tests extend
-`SpringProcessEngineTestCase`. A shared configuration file
-`operaton.cfg.xml` is bundled under `src/test/resources` in each template to
-configure an in-memory engine for the tests. Each runtime folder
+`SpringProcessEngineTestCase`. Database specific configuration files live in
+`template/common/<db>` (or `template/common-spring/<db>` for Spring Boot) as
+`operaton.cfg.xml` and are mixed in for each example. Each runtime folder
 only needs to provide its specific `pom.xml` files. When new runtimes or
 databases should be demonstrated simply add the corresponding template
-directory with a `pom.xml` and re-use the common sources.
+directory with a `pom.xml` and, if necessary, an `operaton.cfg.xml` under the
+appropriate database subfolder.
 
 ## Generating a New Version
 
