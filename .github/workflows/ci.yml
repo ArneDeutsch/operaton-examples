@@ -15,6 +15,13 @@ jobs:
       - name: Build examples
         run: |
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
+            dir=$(dirname "$pom")
+            if [ -f "$dir/docker-compose.yml" ]; then
+              docker compose -f "$dir/docker-compose.yml" up -d
+            fi
             mvn -B -f "$pom" test
+            if [ -f "$dir/docker-compose.yml" ]; then
+              docker compose -f "$dir/docker-compose.yml" down
+            fi
           done
 

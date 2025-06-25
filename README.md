@@ -66,7 +66,17 @@ Each example contains JUnit tests. To execute them for a specific module run
 mvn -f 1.0.0/spring-boot/h2/pom.xml test
 ```
 
-or simply run `mvn clean test` to build all modules.
+For modules that use databases other than H2 a `docker-compose.yml` is included
+next to the `pom.xml`. Start the database container before executing the tests:
+
+```bash
+docker compose up -d
+mvn -f 1.0.0/spring-boot/postgres/pom.xml test
+docker compose down
+```
+
+Alternatively run `mvn clean test` to build all modules. The CI workflow will
+start and stop the containers automatically.
 
 ## Continuous Integration
 
