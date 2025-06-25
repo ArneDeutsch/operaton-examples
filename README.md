@@ -7,12 +7,12 @@ with Maven.
 
 ## Building the Examples
 
-Java 17 or newer and Maven 3.9+ are required. You may use a local Maven
-installation or the Maven wrapper shipped with the project.
+Java 17 or newer and Maven 3.9+ are required. Make sure a recent Maven
+installation is available on your `PATH`.
 
 ```bash
 # build all modules
-./mvnw clean test
+mvn clean test
 ```
 
 ## Repository Layout
@@ -58,10 +58,10 @@ This creates a `1.1.0/` folder containing copies of the templates with their
 Each example contains JUnit tests. To execute them for a specific module run
 
 ```bash
-./mvnw -f 1.0.0/spring-boot/h2/pom.xml test
+mvn -f 1.0.0/spring-boot/h2/pom.xml test
 ```
 
-or simply run `./mvnw clean test` to build all modules.
+or simply run `mvn clean test` to build all modules.
 
 ## Continuous Integration
 
