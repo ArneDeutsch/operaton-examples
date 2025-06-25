@@ -1,0 +1,20 @@
+name: CI
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Build examples
+        run: |
+          for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
+            mvn -B -f "$pom" test
+          done
+

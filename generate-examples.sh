@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Generate example directories for a new Operaton version
+# Usage: ./generate-examples.sh <version>
 set -e
 VERSION="$1"
 if [[ -z "$VERSION" ]]; then
