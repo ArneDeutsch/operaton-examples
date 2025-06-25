@@ -31,12 +31,12 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <version>1.0.0-beta-4</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-junit5</artifactId>
-      <version>1.0.0-beta-4</version>
+      <version>1.0.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
