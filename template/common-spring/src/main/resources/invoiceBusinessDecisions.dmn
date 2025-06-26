@@ -4,6 +4,7 @@
              name="Invoice Decisions"
              namespace="http://example.com/operaton/invoice">
   <decision id="approve" name="Always Approve">
+    <variable name="approved" typeRef="boolean" />
     <literalExpression>
       <text>true</text>
     </literalExpression>
