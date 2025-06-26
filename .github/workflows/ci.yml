@@ -45,6 +45,16 @@ jobs:
             done
             return 1
           }
+          wait_for_db2() {
+            local project="$1"
+            for i in {1..60}; do
+              if docker compose -p "$project" exec -T db su - db2inst1 -c "db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1"; then
+                return 0
+              fi
+              sleep 5
+            done
+            return 1
+          }
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
             dir=$(dirname "$pom")
             project=$(echo "$dir" | sed 's#^\./##' | tr '/:.' '_')
@@ -67,6 +77,12 @@ jobs:
                   case "$db" in
                     mysql|mariadb)
                       if ! wait_for_mysql "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
+                    db2)
+                      if ! wait_for_db2 "$project"; then
                         docker compose -p "$project" -f "$dir/docker-compose.yml" logs
                         exit 1
                       fi
