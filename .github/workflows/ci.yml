@@ -35,6 +35,16 @@ jobs:
             done
             return 1
           }
+          wait_for_mssql() {
+            local project="$1"
+            for i in {1..40}; do
+              if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
+                return 0
+              fi
+              sleep 3
+            done
+            return 1
+          }
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
             dir=$(dirname "$pom")
             project=$(echo "$dir" | sed 's#^\./##' | tr '/:.' '_')
@@ -51,9 +61,12 @@ jobs:
               esac
                 if [ "$port" -ne 0 ]; then
                   wait_for_port "$port"
-                  if [ "$db" = "mysql" ] || [ "$db" = "mariadb" ]; then
-                    wait_for_mysql "$project"
-                  fi
+                  case "$db" in
+                    mysql|mariadb)
+                      wait_for_mysql "$project" ;;
+                    sqlserver)
+                      wait_for_mssql "$project" ;;
+                  esac
                 fi
             fi
             mvn -B -f "$pom" test
