@@ -17,11 +17,41 @@ jobs:
           set -e
           wait_for_port() {
             local port="$1"
-            for i in {1..30}; do
+            for i in {1..60}; do
               if nc -z localhost "$port"; then
                 return 0
               fi
               sleep 3
+            done
+            return 1
+          }
+          wait_for_mysql() {
+            local project="$1"
+            for i in {1..60}; do
+              if docker compose -p "$project" exec -T db mysqladmin ping -uoperaton -poperaton --silent; then
+                return 0
+              fi
+              sleep 3
+            done
+            return 1
+          }
+          wait_for_mssql() {
+            local project="$1"
+            for i in {1..60}; do
+              if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
+                return 0
+              fi
+              sleep 3
+            done
+            return 1
+          }
+          wait_for_db2() {
+            local project="$1"
+            for i in {1..90}; do
+              if docker compose -p "$project" exec -T db bash -c 'id -u db2inst1 >/dev/null 2>&1 && su - db2inst1 -c "db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1"'; then
+                return 0
+              fi
+              sleep 10
             done
             return 1
           }
@@ -39,9 +69,32 @@ jobs:
                 sqlserver) port=1433 ;;
                 *) port=0 ;;
               esac
-              if [ "$port" -ne 0 ]; then
-                wait_for_port "$port"
-              fi
+                if [ "$port" -ne 0 ]; then
+                  if ! wait_for_port "$port"; then
+                    docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                    exit 1
+                  fi
+                  case "$db" in
+                    mysql|mariadb)
+                      if ! wait_for_mysql "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
+                    db2)
+                      if ! wait_for_db2 "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
+                    sqlserver)
+                      if ! wait_for_mssql "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
+                  esac
+                fi
             fi
             mvn -B -f "$pom" test
             if [ -f "$dir/docker-compose.yml" ]; then
