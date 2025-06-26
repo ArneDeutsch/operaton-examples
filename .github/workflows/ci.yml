@@ -17,7 +17,7 @@ jobs:
           set -e
           wait_for_port() {
             local port="$1"
-            for i in {1..40}; do
+            for i in {1..60}; do
               if nc -z localhost "$port"; then
                 return 0
               fi
@@ -27,7 +27,7 @@ jobs:
           }
           wait_for_mysql() {
             local project="$1"
-            for i in {1..40}; do
+            for i in {1..60}; do
               if docker compose -p "$project" exec -T db mysqladmin ping -uoperaton -poperaton --silent; then
                 return 0
               fi
@@ -37,7 +37,7 @@ jobs:
           }
           wait_for_mssql() {
             local project="$1"
-            for i in {1..40}; do
+            for i in {1..60}; do
               if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
                 return 0
               fi
