@@ -27,8 +27,9 @@ for EX in "${EXAMPLES[@]}"; do
     if [[ -d "$TEMPLATE" ]]; then
       mkdir -p "$TARGET"
       # copy common sources first, then runtime specific and finally the pom
-      if [[ -d "$COMMON_SRC" ]]; then
-        cp -r "$COMMON_SRC/." "$TARGET/"
+      if [[ -d "$COMMON_SRC/src" ]]; then
+        mkdir -p "$TARGET/src"
+        cp -r "$COMMON_SRC/src/." "$TARGET/src/"
       fi
       # mix in database specific overrides
       if [[ -d "$COMMON_SRC/$DB" ]]; then
