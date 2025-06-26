@@ -13,6 +13,8 @@
     <property name="jdbcDriver" value="org.mariadb.jdbc.Driver" />
     <property name="databaseSchemaUpdate" value="true" />
     <property name="skipIsolationLevelCheck" value="true" />
+    <!-- disable batch JDBC statements as MariaDB driver does not return affected row count -->
+    <property name="jdbcBatchProcessing" value="false" />
   </bean>
 
 </beans>

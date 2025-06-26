@@ -13,6 +13,7 @@
     <property name="jdbcDriver" value="org.mariadb.jdbc.Driver" />
     <property name="databaseSchemaUpdate" value="true" />
     <property name="skipIsolationLevelCheck" value="true" />
+    <property name="jdbcBatchProcessing" value="false" />
   </bean>
 
 </beans>
