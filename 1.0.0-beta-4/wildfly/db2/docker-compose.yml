@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: ibmcom/db2:11.5.0.0a
+    image: ibmcom/db2:11.5.8.0
     privileged: true
     ports:
       - "50000:50000"
