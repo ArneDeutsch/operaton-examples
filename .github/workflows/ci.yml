@@ -48,7 +48,8 @@ jobs:
           wait_for_db2() {
             local project="$1"
             for i in {1..90}; do
-              if docker compose -p "$project" exec -T db bash -c 'id -u db2inst1 >/dev/null 2>&1 && su - db2inst1 -c "db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1"'; then
+              if docker compose -p "$project" exec -T db \
+                   su - db2inst1 -c 'db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1'; then
                 return 0
               fi
               sleep 10
