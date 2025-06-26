@@ -2,6 +2,7 @@ version: '3.8'
 services:
   db:
     image: gvenzl/oracle-xe:21-slim
+    shm_size: 1g
     ports:
       - "1521:1521"
     environment:
