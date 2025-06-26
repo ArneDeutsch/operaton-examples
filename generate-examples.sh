@@ -14,6 +14,7 @@ DBS=(h2 postgres mysql mariadb oracle db2 sqlserver)
 
 COMMON_TEMPLATE="template/common"
 SPRING_COMMON_TEMPLATE="template/common-spring"
+DB_TEMPLATE="template/databases"
 
 for EX in "${EXAMPLES[@]}"; do
   for DB in "${DBS[@]}"; do
@@ -32,6 +33,10 @@ for EX in "${EXAMPLES[@]}"; do
         cp -r "$COMMON_SRC/src/." "$TARGET/src/"
       fi
       # mix in database specific overrides
+      if [[ -d "$DB_TEMPLATE/$DB" ]]; then
+        cp -r "$DB_TEMPLATE/$DB/." "$TARGET/"
+      fi
+      # allow runtime specific overrides for a database if present
       if [[ -d "$COMMON_SRC/$DB" ]]; then
         cp -r "$COMMON_SRC/$DB/." "$TARGET/"
       fi
