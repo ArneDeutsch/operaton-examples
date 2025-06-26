@@ -6,6 +6,7 @@
 
   <bean id="processEngineConfiguration"
         class="org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+    <property name="enforceHistoryTimeToLive" value="false" />
     <property name="jdbcUrl" value="jdbc:sqlserver://localhost:1433;databaseName=operaton;encrypt=true;trustServerCertificate=true" />
     <property name="jdbcUsername" value="operaton" />
     <property name="jdbcPassword" value="operaton" />

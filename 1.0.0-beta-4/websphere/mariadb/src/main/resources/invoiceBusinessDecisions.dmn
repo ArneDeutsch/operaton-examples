@@ -1,3 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" id="Definitions_1">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             id="Definitions_1"
+             name="Invoice Decisions"
+             namespace="http://example.com/operaton/invoice">
+  <decision id="approve" name="Always Approve">
+    <literalExpression>
+      <text>true</text>
+    </literalExpression>
+  </decision>
 </definitions>

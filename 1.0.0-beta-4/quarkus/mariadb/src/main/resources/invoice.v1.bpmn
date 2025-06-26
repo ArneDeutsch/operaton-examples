@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions_1">
-  <process id="invoice" isExecutable="true">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+             targetNamespace="http://example.com/operaton/invoice"
+             id="Definitions_1">
+  <process id="invoice" isExecutable="true" operaton:historyTimeToLive="P5D">
     <startEvent id="start" />
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="approveInvoice" />
+    <userTask id="approveInvoice" name="Approve Invoice" />
+    <sequenceFlow id="flow2" sourceRef="approveInvoice" targetRef="end" />
     <endEvent id="end" />
   </process>
 </definitions>

@@ -6,6 +6,7 @@
 
   <bean id="processEngineConfiguration"
         class="org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+    <property name="enforceHistoryTimeToLive" value="false" />
     <property name="jdbcUrl" value="jdbc:h2:mem:operaton-test;DB_CLOSE_DELAY=1000" />
     <property name="databaseSchemaUpdate" value="true" />
   </bean>
