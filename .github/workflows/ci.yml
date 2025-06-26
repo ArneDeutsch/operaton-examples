@@ -60,12 +60,23 @@ jobs:
                 *) port=0 ;;
               esac
                 if [ "$port" -ne 0 ]; then
-                  wait_for_port "$port"
+                  if ! wait_for_port "$port"; then
+                    docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                    exit 1
+                  fi
                   case "$db" in
                     mysql|mariadb)
-                      wait_for_mysql "$project" ;;
+                      if ! wait_for_mysql "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
                     sqlserver)
-                      wait_for_mssql "$project" ;;
+                      if ! wait_for_mssql "$project"; then
+                        docker compose -p "$project" -f "$dir/docker-compose.yml" logs
+                        exit 1
+                      fi
+                      ;;
                   esac
                 fi
             fi
