@@ -12,6 +12,7 @@
     <property name="jdbcPassword" value="operaton" />
     <property name="jdbcDriver" value="org.mariadb.jdbc.Driver" />
     <property name="databaseSchemaUpdate" value="true" />
+    <property name="skipIsolationLevelCheck" value="true" />
   </bean>
 
 </beans>
