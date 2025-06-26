@@ -17,8 +17,18 @@ jobs:
           set -e
           wait_for_port() {
             local port="$1"
-            for i in {1..30}; do
+            for i in {1..40}; do
               if nc -z localhost "$port"; then
+                return 0
+              fi
+              sleep 3
+            done
+            return 1
+          }
+          wait_for_mysql() {
+            local project="$1"
+            for i in {1..40}; do
+              if docker compose -p "$project" exec -T db mysqladmin ping -uoperaton -poperaton --silent; then
                 return 0
               fi
               sleep 3
@@ -39,9 +49,12 @@ jobs:
                 sqlserver) port=1433 ;;
                 *) port=0 ;;
               esac
-              if [ "$port" -ne 0 ]; then
-                wait_for_port "$port"
-              fi
+                if [ "$port" -ne 0 ]; then
+                  wait_for_port "$port"
+                  if [ "$db" = "mysql" ] || [ "$db" = "mariadb" ]; then
+                    wait_for_mysql "$project"
+                  fi
+                fi
             fi
             mvn -B -f "$pom" test
             if [ -f "$dir/docker-compose.yml" ]; then
