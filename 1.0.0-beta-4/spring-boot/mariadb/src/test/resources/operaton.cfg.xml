@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="processEngineConfiguration"
-        class="org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration">
+        class="org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
     <property name="enforceHistoryTimeToLive" value="false" />
     <property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/operaton" />
     <property name="jdbcUsername" value="operaton" />
