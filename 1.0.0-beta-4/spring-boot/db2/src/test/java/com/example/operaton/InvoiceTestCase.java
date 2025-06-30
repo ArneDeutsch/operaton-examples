@@ -7,9 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import com.example.operaton.SimpleSpringTestCase;
-import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -31,9 +28,13 @@ class InvoiceTestCase extends SimpleSpringTestCase {
   }
 
 
-  @Deployment(resources = {"invoice.v1.bpmn", "invoiceBusinessDecisions.dmn"})
   @Test
   void testHappyPath() {
+    processEngine.getRepositoryService()
+        .createDeployment()
+        .addClasspathResource("invoice.v1.bpmn")
+        .addClasspathResource("invoiceBusinessDecisions.dmn")
+        .deploy();
     InputStream invoiceInputStream = Application.class.getClassLoader().getResourceAsStream("invoice.pdf");
     VariableMap variables = Variables.createVariables()
         .putValue("creditor", "Great Pizza for Everyone Inc.")
