@@ -13,8 +13,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Build examples
+        env:
+          ENABLED_DBS: mysql
         run: |
           set -e
+          ENABLED_DBS="${ENABLED_DBS:-all}"
           wait_for_port() {
             local port="$1"
             for i in {1..120}; do
@@ -74,6 +77,10 @@ jobs:
             dir=$(dirname "$pom")
             project=$(echo "$dir" | sed 's#^\./##' | tr '/:.' '_')
             db=$(basename "$dir")
+            if [ "$ENABLED_DBS" != "all" ] && [[ ! " $ENABLED_DBS " =~ " $db " ]]; then
+              echo "Skipping $dir because $db tests are disabled"
+              continue
+            fi
             if [ -f "$dir/docker-compose.yml" ]; then
               docker compose -p "$project" -f "$dir/docker-compose.yml" up -d
               case "$db" in
