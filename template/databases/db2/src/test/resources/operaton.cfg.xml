@@ -5,7 +5,7 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="processEngineConfiguration"
-        class="org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+        class="org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration">
     <property name="enforceHistoryTimeToLive" value="false" />
     <property name="jdbcUrl" value="jdbc:db2://localhost:50000/operaton" />
     <property name="jdbcUsername" value="db2inst1" />
