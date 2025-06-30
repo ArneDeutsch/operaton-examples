@@ -2,11 +2,6 @@ version: '3.8'
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Passw0rd!", "-Q", "SELECT 1"]
-      interval: 10s
-      retries: 10
-      start_period: 20s
     ports:
       - "1433:1433"
     environment:
