@@ -33,6 +33,7 @@ jobs:
                 return 0
               fi
               echo "Waiting for MySQL ($project) (attempt $i)"
+              docker compose -p "$project" logs --tail=20 db
               sleep 3
             done
             return 1
@@ -44,6 +45,7 @@ jobs:
                 return 0
               fi
               echo "Waiting for SQL Server ($project) (attempt $i)"
+              docker compose -p "$project" logs --tail=20 db
               sleep 3
             done
             return 1
@@ -55,6 +57,7 @@ jobs:
                 return 0
               fi
               echo "Waiting for DB2 ($project) (attempt $i)"
+              docker compose -p "$project" logs --tail=20 db
               sleep 10
             done
             return 1
@@ -71,6 +74,7 @@ jobs:
                 return 0
               fi
               echo "Waiting for Oracle ($project) (attempt $i)"
+              docker compose -p "$project" logs --tail=20 db
               sleep 10
             done
             return 1
