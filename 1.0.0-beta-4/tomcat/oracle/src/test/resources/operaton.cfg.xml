@@ -7,7 +7,7 @@
   <bean id="processEngineConfiguration"
         class="org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
     <property name="enforceHistoryTimeToLive" value="false" />
-    <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/FREEPDB1" />
+    <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/XEPDB1" />
     <property name="jdbcUsername" value="operaton" />
     <property name="jdbcPassword" value="operaton" />
     <property name="jdbcDriver" value="oracle.jdbc.OracleDriver" />
