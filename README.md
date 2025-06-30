@@ -86,8 +86,8 @@ start and stop the containers automatically.
 ## Continuous Integration
 
 A basic GitHub Actions workflow is included at `.github/workflows/ci.yml`.
-It builds every example module on pushes and pull requests. Set the
-`ENABLED_DBS` environment variable to a space separated list of databases to
-test (e.g. `mysql postgres`). The workflow defaults to all databases when the
-variable is unset.
+It builds every example module on pushes and pull requests. By default only the
+MySQL based examples run. Set the `ENABLED_DBS` environment variable to a space
+separated list of databases to test (e.g. `mysql postgres`). When the variable
+is unset the workflow falls back to all databases.
 Ensure that the repository has GitHub Actions enabled.
