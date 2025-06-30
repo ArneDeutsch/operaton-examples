@@ -21,6 +21,7 @@ jobs:
               if nc -z localhost "$port"; then
                 return 0
               fi
+              echo "Waiting for port $port (attempt $i)"
               sleep 3
             done
             return 1
@@ -31,6 +32,7 @@ jobs:
               if docker compose -p "$project" exec -T db sh -c 'command -v mysqladmin >/dev/null 2>&1 && mysqladmin ping -uoperaton -poperaton --silent || mariadb-admin ping -uoperaton -poperaton --silent'; then
                 return 0
               fi
+              echo "Waiting for MySQL ($project) (attempt $i)"
               sleep 3
             done
             return 1
@@ -41,6 +43,7 @@ jobs:
               if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
                 return 0
               fi
+              echo "Waiting for SQL Server ($project) (attempt $i)"
               sleep 3
             done
             return 1
@@ -51,6 +54,7 @@ jobs:
               if docker compose -p "$project" exec -T db bash -c 'id -u db2inst1 >/dev/null 2>&1 && su - db2inst1 -c "db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1"'; then
                 return 0
               fi
+              echo "Waiting for DB2 ($project) (attempt $i)"
               sleep 10
             done
             return 1
@@ -66,6 +70,7 @@ jobs:
               if docker compose -p "$project" exec -T db bash -c "echo 'set heading off feedback off; select 1 from dual; exit;' | sqlplus -L -S operaton/operaton@localhost:1521/XEPDB1" | grep -q '^1$'; then
                 return 0
               fi
+              echo "Waiting for Oracle ($project) (attempt $i)"
               sleep 10
             done
             return 1
