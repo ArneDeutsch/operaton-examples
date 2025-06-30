@@ -2,7 +2,11 @@ package com.example.operaton;
 
 import java.io.InputStream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -15,6 +19,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
 
 class InvoiceTestCase extends SpringProcessEngineTestCase {
+
+  @BeforeEach
+  void setUpEngine(TestInfo info) throws Exception {
+    super.setUp(info);
+  }
+
+  @AfterEach
+  void tearDownEngine(TestInfo info) throws Exception {
+    super.tearDown(info);
+  }
 
 
   @Deployment(resources = {"invoice.v1.bpmn", "invoiceBusinessDecisions.dmn"})
