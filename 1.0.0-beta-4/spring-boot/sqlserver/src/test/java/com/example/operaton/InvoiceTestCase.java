@@ -3,24 +3,19 @@ package com.example.operaton;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.spring.test.SpringProcessEngineTestCase;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
 
-@ExtendWith(ProcessEngineExtension.class)
-class InvoiceTestCase {
-
-  ProcessEngine processEngine;
+class InvoiceTestCase extends SpringProcessEngineTestCase {
 
   RuntimeService runtimeService;
   TaskService taskService;
