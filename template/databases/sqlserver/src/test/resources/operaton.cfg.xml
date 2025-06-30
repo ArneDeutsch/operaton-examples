@@ -5,13 +5,17 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="processEngineConfiguration"
-        class="org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+        class="org.operaton.bpm.engine.spring.SpringProcessEngineConfiguration">
     <property name="enforceHistoryTimeToLive" value="false" />
     <property name="jdbcUrl" value="jdbc:sqlserver://localhost:1433;databaseName=operaton;encrypt=true;trustServerCertificate=true" />
     <property name="jdbcUsername" value="operaton" />
     <property name="jdbcPassword" value="operaton" />
     <property name="jdbcDriver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
     <property name="databaseSchemaUpdate" value="true" />
+  </bean>
+
+  <bean id="processEngine" class="org.operaton.bpm.engine.spring.ProcessEngineFactoryBean">
+    <property name="processEngineConfiguration" ref="processEngineConfiguration" />
   </bean>
 
 </beans>
