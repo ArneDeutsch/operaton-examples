@@ -12,4 +12,9 @@ abstract class SimpleSpringTestCase extends SpringProcessEngineTestCase {
   protected SpringTestHelper lookupTestHelper() {
     return new Spring5TestHelper();
   }
+
+  @Override
+  protected String[] getConfigLocations() {
+    return new String[] {"classpath:operaton.cfg.xml"};
+  }
 }
