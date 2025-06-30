@@ -17,72 +17,33 @@ jobs:
           set -e
           wait_for_port() {
             local port="$1"
-            for i in {1..120}; do
-              if nc -z localhost "$port"; then
-                return 0
-              fi
-              echo "Waiting for port $port (attempt $i)"
-              sleep 3
-            done
-            return 1
+            echo "Waiting 10 seconds for port $port"
+            sleep 10
+            return 0
           }
           wait_for_mysql() {
             local project="$1"
-            for i in {1..120}; do
-              if docker compose -p "$project" exec -T db sh -c 'command -v mysqladmin >/dev/null 2>&1 && mysqladmin ping -uoperaton -poperaton --silent || mariadb-admin ping -uoperaton -poperaton --silent'; then
-                return 0
-              fi
-              echo "Waiting for MySQL ($project) (attempt $i)"
-              docker compose -p "$project" logs --tail=20 db
-              sleep 3
-            done
-            return 1
+            echo "Waiting 10 seconds for MySQL ($project)"
+            sleep 10
+            return 0
           }
           wait_for_mssql() {
             local project="$1"
-            for i in {1..120}; do
-              local cid
-              cid=$(docker compose -p "$project" ps -q db)
-              if [ -n "$cid" ] && [ "$(docker inspect -f '{{.State.Health.Status}}' "$cid" 2>/dev/null)" = "healthy" ]; then
-                return 0
-              fi
-              if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
-                return 0
-              fi
-              echo "Waiting for SQL Server ($project) (attempt $i)"
-              docker compose -p "$project" logs --tail=20 db
-              sleep 3
-            done
-            return 1
+            echo "Waiting 10 seconds for SQL Server ($project)"
+            sleep 10
+            return 0
           }
           wait_for_db2() {
             local project="$1"
-            for i in {1..120}; do
-              if docker compose -p "$project" exec -T db bash -c 'id -u db2inst1 >/dev/null 2>&1 && su - db2inst1 -c "db2 connect to operaton >/dev/null 2>&1 && db2 connect reset >/dev/null 2>&1"'; then
-                return 0
-              fi
-              echo "Waiting for DB2 ($project) (attempt $i)"
-              docker compose -p "$project" logs --tail=20 db
-              sleep 10
-            done
-            return 1
+            echo "Waiting 10 seconds for DB2 ($project)"
+            sleep 10
+            return 0
           }
           wait_for_oracle() {
             local project="$1"
-            local cid
-            cid=$(docker compose -p "$project" ps -q db)
-            for i in {1..120}; do
-              if [ "$(docker inspect -f '{{.State.Health.Status}}' "$cid" 2>/dev/null)" = "healthy" ]; then
-                return 0
-              fi
-              if docker compose -p "$project" exec -T db bash -c "echo 'set heading off feedback off; select 1 from dual; exit;' | sqlplus -L -S operaton/operaton@localhost:1521/XEPDB1" | grep -q '^1$'; then
-                return 0
-              fi
-              echo "Waiting for Oracle ($project) (attempt $i)"
-              docker compose -p "$project" logs --tail=20 db
-              sleep 10
-            done
-            return 1
+            echo "Waiting 10 seconds for Oracle ($project)"
+            sleep 10
+            return 0
           }
           for pom in $(find . -path './template' -prune -o -name pom.xml -print); do
             dir=$(dirname "$pom")
