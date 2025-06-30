@@ -10,14 +10,25 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
 
-class InvoiceTestCase extends SpringProcessEngineTestCase {
+@SpringBootTest
+@ExtendWith({SpringExtension.class, ProcessEngineExtension.class})
+class InvoiceTestCase {
 
+  @Autowired
+  ProcessEngine processEngine;
+  @Autowired
   RuntimeService runtimeService;
+  @Autowired
   TaskService taskService;
 
   @Deployment(resources = {"invoice.v1.bpmn", "invoiceBusinessDecisions.dmn"})

@@ -35,8 +35,9 @@ Templates live under the `template/` directory. A sub folder exists for each
 runtime (for example `spring-boot` or `tomcat`) and inside that for every
 supported database. The actual source and test code is shared in
 `template/common` and is copied to every generated example. Spring Boot modules
-instead use `template/common-spring` so their tests extend
-`SpringProcessEngineTestCase`. Database specific configuration files now live in
+instead use `template/common-spring` where tests are annotated with
+`@SpringBootTest` and use `ProcessEngineExtension` for JUnit Jupiter.
+Database specific configuration files now live in
 `template/databases/<db>` and are mixed into every example. Runtime specific
 overrides can still be placed under `template/common/<db>` or
 `template/common-spring/<db>` if they differ. Each runtime folder only needs to
