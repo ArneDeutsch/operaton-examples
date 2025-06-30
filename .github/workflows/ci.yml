@@ -37,12 +37,7 @@ jobs:
           }
           wait_for_mssql() {
             local project="$1"
-            local cid
-            cid=$(docker compose -p "$project" ps -q db)
-            for i in {1..180}; do
-              if [ "$(docker inspect -f '{{.State.Health.Status}}' "$cid" 2>/dev/null)" = "healthy" ]; then
-                return 0
-              fi
+            for i in {1..240}; do
               if docker compose -p "$project" exec -T db /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Passw0rd! -Q "SELECT 1" >/dev/null 2>&1; then
                 return 0
               fi
