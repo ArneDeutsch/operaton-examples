@@ -6,7 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.operaton.bpm.engine.spring.test.SpringProcessEngineTestCase;
+import com.example.operaton.SimpleSpringTestCase;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -18,7 +18,7 @@ import org.operaton.bpm.engine.task.Task;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
 
-class InvoiceTestCase extends SpringProcessEngineTestCase {
+class InvoiceTestCase extends SimpleSpringTestCase {
 
   @BeforeEach
   void setUpEngine(TestInfo info) throws Exception {
