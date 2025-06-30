@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import com.example.operaton.SimpleSpringTestCase;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -20,13 +21,13 @@ import static org.operaton.bpm.engine.variable.Variables.*;
 class InvoiceTestCase extends SimpleSpringTestCase {
 
   @BeforeEach
-  void setUpEngine() throws Exception {
-    super.setUp();
+  void setUpEngine(TestInfo info) throws Exception {
+    super.setUp(info);
   }
 
   @AfterEach
-  void tearDownEngine() throws Exception {
-    super.tearDown();
+  void tearDownEngine(TestInfo info) throws Exception {
+    super.tearDown(info);
   }
 
 
