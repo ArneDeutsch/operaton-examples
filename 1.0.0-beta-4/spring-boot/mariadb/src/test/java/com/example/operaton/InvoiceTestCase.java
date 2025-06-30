@@ -1,7 +1,6 @@
 package com.example.operaton;
 
 import java.io.InputStream;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,12 +10,10 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.operaton.bpm.engine.variable.Variables.*;
 
 class InvoiceTestCase extends SimpleSpringTestCase {
-
   @BeforeEach
   void setUpEngine(TestInfo info) throws Exception {
     super.setUp(info);
@@ -27,14 +24,8 @@ class InvoiceTestCase extends SimpleSpringTestCase {
     super.tearDown(info);
   }
 
-
   @Test
   void testHappyPath() {
-    processEngine.getRepositoryService()
-        .createDeployment()
-        .addClasspathResource("invoice.v1.bpmn")
-        .addClasspathResource("invoiceBusinessDecisions.dmn")
-        .deploy();
     InputStream invoiceInputStream = Application.class.getClassLoader().getResourceAsStream("invoice.pdf");
     VariableMap variables = Variables.createVariables()
         .putValue("creditor", "Great Pizza for Everyone Inc.")
@@ -47,6 +38,10 @@ class InvoiceTestCase extends SimpleSpringTestCase {
             .create());
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("invoice", variables);
+    assertTrue(processEngine.getRepositoryService()
+        .createProcessDefinitionQuery()
+        .processDefinitionKey("invoice")
+        .count() > 0);
     Task task = taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult();
     assertEquals("approveInvoice", task.getTaskDefinitionKey());
   }

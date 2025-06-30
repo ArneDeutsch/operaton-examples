@@ -13,6 +13,12 @@
     <property name="jdbcDriver" value="com.mysql.cj.jdbc.Driver" />
     <property name="databaseSchemaUpdate" value="true" />
     <property name="skipIsolationLevelCheck" value="true" />
+    <property name="deploymentResources">
+      <list>
+        <value>classpath*:*.bpmn</value>
+        <value>classpath*:*.dmn</value>
+      </list>
+    </property>
   </bean>
 
   <bean id="processEngine" class="org.operaton.bpm.engine.spring.ProcessEngineFactoryBean">
