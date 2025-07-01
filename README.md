@@ -35,11 +35,11 @@ Templates live under the `template/` directory. A sub folder exists for each
 runtime (for example `spring-boot` or `tomcat`) and inside that for every
 supported database. The actual source and test code is shared in
 `template/common` and is copied to every generated example. Spring Boot modules
-instead use `template/common-spring` so their tests extend
-`SpringProcessEngineTestCase`. Database specific configuration files now live in
-`template/databases/<db>` and are mixed into every example. Runtime specific
-overrides can still be placed under `template/common/<db>` or
-`template/common-spring/<db>` if they differ. Each runtime folder only needs to
+instead use `template/common-spring` where tests manually create a process
+engine using `StandaloneProcessEngineConfiguration`. Each runtime folder
+only needs to provide its specific `pom.xml` files. When new runtimes or
+databases should be demonstrated simply add the corresponding template
+directory with a `pom.xml` and re-use the common sources.
 provide its specific `pom.xml` files. When new runtimes or databases should be
 demonstrated simply add the corresponding template directory with a `pom.xml`
 and, if necessary, an `operaton.cfg.xml` under the appropriate database
@@ -85,5 +85,9 @@ start and stop the containers automatically.
 ## Continuous Integration
 
 A basic GitHub Actions workflow is included at `.github/workflows/ci.yml`.
-It builds every example module on pushes and pull requests. Ensure that the
-repository has GitHub Actions enabled.
+It builds every example module on pushes and pull requests. By default only the
+MySQL based examples run. Set the `ENABLED_DBS` environment variable to a space
+separated list of databases to test (e.g. `mysql postgres`). For example,
+`ENABLED_DBS=mysql` runs only the MySQL modules. When the variable is unset the
+workflow falls back to all databases.
+Ensure that the repository has GitHub Actions enabled.
