@@ -35,8 +35,8 @@ Templates live under the `template/` directory. A sub folder exists for each
 runtime (for example `spring-boot` or `tomcat`) and inside that for every
 supported database. The actual source and test code is shared in
 `template/common` and is copied to every generated example. Spring Boot modules
-instead use `template/common-spring` so their tests extend
-`SpringProcessEngineTestCase`. Each runtime folder
+instead use `template/common-spring` where tests manually create a process
+engine using `StandaloneProcessEngineConfiguration`. Each runtime folder
 only needs to provide its specific `pom.xml` files. When new runtimes or
 databases should be demonstrated simply add the corresponding template
 directory with a `pom.xml` and re-use the common sources.
